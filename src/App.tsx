@@ -478,37 +478,72 @@ function TypographyPage() {
 function ButtonPage() {
   const { t } = useTranslation();
   return (
-    <div className="space-y-8">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold">{t.button.title}</h1>
-        <p className="text-slate-500">{t.button.subtitle}</p>
+    <div className="space-y-12">
+      <div className="space-y-4">
+        <h1 className="text-4xl font-black tracking-tight text-slate-900">{t.button.title}</h1>
+        <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
+          {t.button.subtitle}
+        </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>{t.button.variants}</CardTitle>
-          <CardDescription>{t.button.variantsDesc}</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-wrap gap-4">
-          <Button variant="primary">{t.button.primary}</Button>
-          <Button variant="secondary">{t.button.secondary}</Button>
-          <Button variant="outline">{t.button.outline}</Button>
-          <Button variant="ghost">{t.button.ghost}</Button>
-          <Button variant="danger">{t.button.danger}</Button>
-          <Button variant="success">{t.button.success}</Button>
-        </CardContent>
-      </Card>
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.button.variants}</h2>
+        <Card>
+          <CardHeader>
+            <CardTitle>{t.button.variants}</CardTitle>
+            <CardDescription>{t.button.variantsDesc}</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-wrap gap-4">
+            <Button variant="default">{t.button.primary}</Button>
+            <Button variant="secondary">{t.button.secondary}</Button>
+            <Button variant="outline">{t.button.outline}</Button>
+            <Button variant="ghost">{t.button.ghost}</Button>
+            <Button variant="danger">{t.button.danger}</Button>
+            <Button variant="success">{t.button.success}</Button>
+            <Button variant="link">{t.button.link}</Button>
+          </CardContent>
+        </Card>
+      </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>{t.button.states}</CardTitle>
-          <CardDescription>{t.button.statesDesc}</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-wrap gap-4">
-          <Button isLoading>{t.button.loading}</Button>
-          <Button disabled>{t.button.disabled}</Button>
-        </CardContent>
-      </Card>
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.button.states}</h2>
+        <Card>
+          <CardHeader>
+            <CardTitle>{t.button.states}</CardTitle>
+            <CardDescription>{t.button.statesDesc}</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-wrap gap-4">
+            <Button isLoading>{t.button.loading}</Button>
+            <Button disabled>{t.button.disabled}</Button>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.button.dosAndDonts}</h2>
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="space-y-4 rounded-xl border border-emerald-100 bg-emerald-50/50 p-6">
+            <h3 className="font-bold text-emerald-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-emerald-500" />
+              Dos
+            </h3>
+            <ul className="space-y-2 text-sm text-emerald-800/80 list-disc pl-4">
+              <li>{t.button.do1}</li>
+              <li>{t.button.do2}</li>
+            </ul>
+          </div>
+          <div className="space-y-4 rounded-xl border border-rose-100 bg-rose-50/50 p-6">
+            <h3 className="font-bold text-rose-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-rose-500" />
+              Don'ts
+            </h3>
+            <ul className="space-y-2 text-sm text-rose-800/80 list-disc pl-4">
+              <li>{t.button.dont1}</li>
+              <li>{t.button.dont2}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
       <div className="ai-border-glow bg-slate-900 p-8 text-white">
         <div className="flex items-center gap-2 mb-4">
@@ -529,11 +564,11 @@ function ButtonPage() {
 function ComboboxPage() {
   const { t } = useTranslation();
   const frameworks = [
-    { value: "next.js", label: "Next.js", icon: LayoutDashboard },
-    { value: "sveltekit", label: "SvelteKit", icon: Palette },
-    { value: "nuxt.js", label: "Nuxt.js", icon: Box },
-    { value: "remix", label: "Remix", icon: Sparkles },
-    { value: "astro", label: "Astro", icon: Type },
+    { value: "next.js", label: "Next.js", icon: LayoutDashboard, group: "React" },
+    { value: "sveltekit", label: "SvelteKit", icon: Palette, group: "Svelte" },
+    { value: "nuxt.js", label: "Nuxt.js", icon: Box, group: "Vue" },
+    { value: "remix", label: "Remix", icon: Sparkles, group: "React" },
+    { value: "astro", label: "Astro", icon: Type, group: "Static" },
   ];
 
   return (
@@ -560,6 +595,7 @@ function ComboboxPage() {
                 placeholder={t.combobox.selectFramework}
                 searchPlaceholder={t.combobox.searchPlaceholder}
                 emptyText={t.combobox.emptyResult}
+                className="w-full max-w-xs"
               />
             </CardContent>
           </Card>
@@ -575,6 +611,38 @@ function ComboboxPage() {
                 placeholder={t.combobox.selectFramework}
                 searchPlaceholder={t.combobox.searchPlaceholder}
                 emptyText={t.combobox.emptyResult}
+                className="w-full max-w-xs"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Grouped</CardTitle>
+              <CardDescription>Options categorized by groups.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-center py-10">
+              <Combobox 
+                options={frameworks}
+                placeholder={t.combobox.selectFramework}
+                searchPlaceholder={t.combobox.searchPlaceholder}
+                emptyText={t.combobox.emptyResult}
+                className="w-full max-w-xs"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Loading</CardTitle>
+              <CardDescription>Combobox in a loading state.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-center py-10">
+              <Combobox 
+                isLoading
+                options={frameworks}
+                placeholder={t.combobox.selectFramework}
+                className="w-full max-w-xs"
               />
             </CardContent>
           </Card>
@@ -586,6 +654,39 @@ function ComboboxPage() {
         <div className="grid gap-8 md:grid-cols-2">
           <Card>
             <CardHeader>
+              <CardTitle>{t.combobox.label}</CardTitle>
+              <CardDescription>{t.combobox.basicDesc}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-center py-10">
+              <Combobox 
+                options={frameworks}
+                label={t.combobox.label}
+                helperText={t.combobox.helperText}
+                placeholder={t.combobox.selectFramework}
+                className="w-full max-w-xs"
+                clearable
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.combobox.error}</CardTitle>
+              <CardDescription>{t.combobox.disabledDesc}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-center py-10">
+              <Combobox 
+                options={frameworks}
+                label={t.combobox.label}
+                error={t.combobox.error}
+                placeholder={t.combobox.selectFramework}
+                className="w-full max-w-xs"
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
               <CardTitle>{t.combobox.disabled}</CardTitle>
               <CardDescription>{t.combobox.disabledDesc}</CardDescription>
             </CardHeader>
@@ -594,6 +695,7 @@ function ComboboxPage() {
                 disabled
                 options={frameworks}
                 placeholder={t.combobox.selectFramework}
+                className="w-full max-w-xs"
               />
             </CardContent>
           </Card>

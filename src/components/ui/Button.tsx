@@ -3,20 +3,21 @@ import { cn } from "@/src/lib/utils";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger" | "success";
+  variant?: "default" | "secondary" | "outline" | "ghost" | "danger" | "success" | "link";
   size?: "sm" | "md" | "lg" | "icon";
   isLoading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", size = "md", isLoading, children, ...props }, ref) => {
+  ({ className, variant = "default", size = "md", isLoading, children, ...props }, ref) => {
     const variants = {
-      primary: "bg-brand-orange text-white hover:bg-brand-orange/90",
+      default: "bg-brand-orange text-white hover:bg-brand-orange/90",
       secondary: "bg-slate-100 text-slate-900 hover:bg-slate-200",
       outline: "border border-slate-200 bg-transparent hover:bg-slate-100",
       ghost: "hover:bg-slate-100",
       danger: "bg-brand-danger text-white hover:bg-brand-danger/90",
       success: "bg-brand-success text-white hover:bg-brand-success/90",
+      link: "text-brand-orange underline-offset-4 hover:underline",
     };
 
     const sizes = {
