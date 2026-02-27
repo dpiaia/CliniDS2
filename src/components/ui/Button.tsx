@@ -3,34 +3,36 @@ import { cn } from "@/src/lib/utils";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "secondary" | "outline" | "ghost" | "danger" | "success" | "link";
-  size?: "sm" | "md" | "lg" | "icon";
+  variant?: "default" | "secondary" | "outline" | "ghost" | "destructive" | "success" | "link";
+  size?: "sm" | "default" | "lg" | "icon" | "icon-sm" | "icon-lg";
   isLoading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "default", size = "md", isLoading, children, ...props }, ref) => {
+  ({ className, variant = "default", size = "default", isLoading, children, ...props }, ref) => {
     const variants = {
-      default: "bg-brand-orange text-white hover:bg-brand-orange/90",
-      secondary: "bg-slate-100 text-slate-900 hover:bg-slate-200",
-      outline: "border border-slate-200 bg-transparent hover:bg-slate-100",
-      ghost: "hover:bg-slate-100",
-      danger: "bg-brand-danger text-white hover:bg-brand-danger/90",
-      success: "bg-brand-success text-white hover:bg-brand-success/90",
-      link: "text-brand-orange underline-offset-4 hover:underline",
+      default: "bg-brand-orange text-white hover:bg-brand-orange/90 shadow-sm",
+      secondary: "bg-[#FDF1EB] text-brand-orange hover:bg-[#FBE3D7]",
+      outline: "border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 shadow-sm",
+      ghost: "hover:bg-slate-100 text-slate-600",
+      destructive: "bg-brand-danger text-white hover:bg-brand-danger/90 shadow-sm",
+      success: "bg-brand-success text-white hover:bg-brand-success/90 shadow-sm",
+      link: "text-brand-orange underline-offset-4 hover:underline px-0 h-auto",
     };
 
     const sizes = {
       sm: "h-8 px-3 text-xs",
-      md: "h-10 px-4 py-2",
-      lg: "h-12 px-8 text-lg",
+      default: "h-10 px-4 py-2 text-sm",
+      lg: "h-12 px-8 text-base",
       icon: "h-10 w-10",
+      "icon-sm": "h-8 w-8",
+      "icon-lg": "h-12 w-12",
     };
 
     return (
       <button
         className={cn(
-          "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50",
+          "inline-flex items-center justify-center rounded-md font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange/50 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
           variants[variant],
           sizes[size],
           className
@@ -41,7 +43,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading && (
           <svg
-            className="mr-2 h-4 w-4 animate-spin"
+            className={cn("h-4 w-4 animate-spin", children && "mr-2")}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

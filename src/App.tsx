@@ -475,16 +475,51 @@ function TypographyPage() {
   );
 }
 
+interface PageHeaderProps {
+  title: string;
+  subtitle: string;
+  figmaLink?: string;
+  shadcnLink?: string;
+}
+
+function PageHeader({ title, subtitle, figmaLink, shadcnLink }: PageHeaderProps) {
+  const { t } = useTranslation();
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-4xl font-black tracking-tight text-slate-900">{title}</h1>
+        <div className="flex items-center gap-2">
+          {figmaLink && (
+            <Button variant="outline" size="sm" className="gap-2" onClick={() => window.open(figmaLink, "_blank")}>
+              <Box className="h-4 w-4" />
+              Figma
+            </Button>
+          )}
+          {shadcnLink && (
+            <Button variant="outline" size="sm" className="gap-2" onClick={() => window.open(shadcnLink, "_blank")}>
+              <ExternalLink className="h-4 w-4" />
+              Shadcn
+            </Button>
+          )}
+        </div>
+      </div>
+      <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
+        {subtitle}
+      </p>
+    </div>
+  );
+}
+
 function ButtonPage() {
   const { t } = useTranslation();
   return (
     <div className="space-y-12">
-      <div className="space-y-4">
-        <h1 className="text-4xl font-black tracking-tight text-slate-900">{t.button.title}</h1>
-        <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
-          {t.button.subtitle}
-        </p>
-      </div>
+      <PageHeader 
+        title={t.button.title} 
+        subtitle={t.button.subtitle} 
+        figmaLink={t.button.figmaLink}
+        shadcnLink={t.button.shadcnLink}
+      />
 
       <section className="space-y-6">
         <h2 className="text-2xl font-bold text-slate-900">{t.button.variants}</h2>
@@ -498,9 +533,65 @@ function ButtonPage() {
             <Button variant="secondary">{t.button.secondary}</Button>
             <Button variant="outline">{t.button.outline}</Button>
             <Button variant="ghost">{t.button.ghost}</Button>
-            <Button variant="danger">{t.button.danger}</Button>
+            <Button variant="destructive">{t.button.destructive}</Button>
             <Button variant="success">{t.button.success}</Button>
             <Button variant="link">{t.button.link}</Button>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.button.sizes.title}</h2>
+        <Card>
+          <CardHeader>
+            <CardTitle>{t.button.sizes.title}</CardTitle>
+            <CardDescription>Different sizes for different visual hierarchy.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-wrap items-center gap-4">
+            <Button size="sm">Small</Button>
+            <Button size="default">Default</Button>
+            <Button size="lg">Large</Button>
+            <Button size="icon-sm"><Palette className="h-4 w-4" /></Button>
+            <Button size="icon"><Palette className="h-4 w-4" /></Button>
+            <Button size="icon-lg"><Palette className="h-5 w-5" /></Button>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">With Icons</h2>
+        <Card>
+          <CardHeader>
+            <CardTitle>Icons</CardTitle>
+            <CardDescription>Buttons can include icons to provide more context.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-wrap gap-4">
+            <Button className="gap-2">
+              <LayoutDashboard className="h-4 w-4" />
+              Dashboard
+            </Button>
+            <Button variant="secondary" className="gap-2">
+              Settings
+              <Palette className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" className="gap-2">
+              <Box className="h-4 w-4" />
+              Packages
+            </Button>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">Full Width</h2>
+        <Card>
+          <CardHeader>
+            <CardTitle>Block Level</CardTitle>
+            <CardDescription>Buttons can take up the full width of their container.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Button className="w-full">Primary Action</Button>
+            <Button variant="secondary" className="w-full">Secondary Action</Button>
           </CardContent>
         </Card>
       </section>
@@ -573,12 +664,12 @@ function ComboboxPage() {
 
   return (
     <div className="space-y-12">
-      <div className="space-y-4">
-        <h1 className="text-4xl font-black tracking-tight text-slate-900">{t.combobox.title}</h1>
-        <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
-          {t.combobox.subtitle}
-        </p>
-      </div>
+      <PageHeader 
+        title={t.combobox.title} 
+        subtitle={t.combobox.subtitle} 
+        figmaLink={t.combobox.figmaLink}
+        shadcnLink={t.combobox.shadcnLink}
+      />
 
       <section className="space-y-6">
         <h2 className="text-2xl font-bold text-slate-900">{t.combobox.examples}</h2>
@@ -736,12 +827,12 @@ function AccordionPage() {
 
   return (
     <div className="space-y-12">
-      <div className="space-y-4">
-        <h1 className="text-4xl font-black tracking-tight text-slate-900">{t.accordion.title}</h1>
-        <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
-          {t.accordion.subtitle}
-        </p>
-      </div>
+      <PageHeader 
+        title={t.accordion.title} 
+        subtitle={t.accordion.subtitle} 
+        figmaLink={t.accordion.figmaLink}
+        shadcnLink={t.accordion.shadcnLink}
+      />
 
       <section className="space-y-6">
         <h2 className="text-2xl font-bold text-slate-900">{t.accordion.examples}</h2>

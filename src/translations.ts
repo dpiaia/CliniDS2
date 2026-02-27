@@ -74,8 +74,13 @@ export const translations = {
     button: {
       title: "Button",
       subtitle: "Interactive elements used for actions, forms, and navigation.",
+      figmaLink: "https://www.figma.com/design/hkANEzlLFBeaAwaHO4ABFs/CliniDS2?node-id=34-6",
+      shadcnLink: "https://ui.shadcn.com/docs/components/button",
       variants: "Variants",
       variantsDesc: "Different styles for different contexts.",
+      sizes: {
+        title: "Sizes",
+      },
       states: "States",
       statesDesc: "Buttons can show loading and disabled states.",
       aiEnhanced: "AI Enhanced Action",
@@ -85,7 +90,7 @@ export const translations = {
       secondary: "Secondary",
       outline: "Outline",
       ghost: "Ghost",
-      danger: "Danger",
+      destructive: "Destructive",
       success: "Success",
       loading: "Loading",
       disabled: "Disabled",
@@ -99,6 +104,8 @@ export const translations = {
     combobox: {
       title: "Combobox",
       subtitle: "Autocomplete input with a list of suggestions. Best for large lists of options.",
+      figmaLink: "https://www.figma.com/design/...",
+      shadcnLink: "https://ui.shadcn.com/docs/components/combobox",
       examples: "Examples",
       basic: "Basic",
       basicDesc: "Standard combobox with search functionality.",
@@ -123,6 +130,8 @@ export const translations = {
     accordion: {
       title: "Accordion",
       subtitle: "A vertically stacked set of interactive headings that each reveal a section of content.",
+      figmaLink: "https://www.figma.com/design/...",
+      shadcnLink: "https://ui.shadcn.com/docs/components/accordion",
       examples: "Examples",
       basic: "Basic",
       basicDesc: "A simple accordion for toggling content visibility.",
@@ -218,8 +227,13 @@ export const translations = {
     button: {
       title: "Botão",
       subtitle: "Elementos interativos usados para ações, formulários e navegação.",
+      figmaLink: "https://www.figma.com/design/hkANEzlLFBeaAwaHO4ABFs/CliniDS2?node-id=34-6",
+      shadcnLink: "https://ui.shadcn.com/docs/components/button",
       variants: "Variantes",
       variantsDesc: "Diferentes estilos para diferentes contextos.",
+      sizes: {
+        title: "Tamanhos",
+      },
       states: "Estados",
       statesDesc: "Buttons can show loading and disabled states.",
       aiEnhanced: "Ação Aprimorada por IA",
@@ -229,7 +243,7 @@ export const translations = {
       secondary: "Secundário",
       outline: "Contorno",
       ghost: "Fantasma",
-      danger: "Perigo",
+      destructive: "Destrutivo",
       success: "Sucesso",
       loading: "Carregando",
       disabled: "Desativado",
@@ -243,6 +257,8 @@ export const translations = {
     combobox: {
       title: "Combobox",
       subtitle: "Input de autocompletar com uma lista de sugestões. Ideal para grandes listas de opções.",
+      figmaLink: "https://www.figma.com/design/...",
+      shadcnLink: "https://ui.shadcn.com/docs/components/combobox",
       examples: "Exemplos",
       basic: "Básico",
       basicDesc: "Combobox padrão com funcionalidade de busca.",
@@ -267,6 +283,8 @@ export const translations = {
     accordion: {
       title: "Acordeão",
       subtitle: "Um conjunto de cabeçalhos interativos empilhados verticalmente que revelam uma seção de conteúdo.",
+      figmaLink: "https://www.figma.com/design/...",
+      shadcnLink: "https://ui.shadcn.com/docs/components/accordion",
       examples: "Exemplos",
       basic: "Básico",
       basicDesc: "Um acordeão simples para alternar a visibilidade do conteúdo.",
