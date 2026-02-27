@@ -3,6 +3,8 @@ import { useState, createContext, useContext } from "react";
 import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/Button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/src/components/ui/Card";
+import { Combobox } from "@/src/components/ui/Combobox";
+import { Accordion, AccordionItem } from "@/src/components/ui/Accordion";
 import { motion, AnimatePresence } from "motion/react";
 import { translations, Language } from "./translations";
 
@@ -54,6 +56,8 @@ function AppContent() {
       title: t.nav.components,
       items: [
         { name: t.nav.button, icon: Box, id: "button" },
+        { name: t.nav.combobox, icon: Search, id: "combobox" },
+        { name: t.nav.accordion, icon: ChevronRight, id: "accordion" },
         { name: t.nav.card, icon: LayoutDashboard, id: "card" },
         { name: t.nav.input, icon: Type, id: "input" },
       ],
@@ -73,6 +77,10 @@ function AppContent() {
         return <TypographyPage />;
       case "button":
         return <ButtonPage />;
+      case "combobox":
+        return <ComboboxPage />;
+      case "accordion":
+        return <AccordionPage />;
       default:
         return <IntroPage />;
     }
@@ -282,37 +290,156 @@ function IntroPage() {
 
 function ColorsPage() {
   const { t } = useTranslation();
-  const colors = [
-    { name: t.colors.brandOrange, hex: "#EC6726", oklch: "0.6698 0.1803 42.9750", description: t.colors.brandOrangeDesc },
-    { name: t.colors.success, hex: "#4CAF50", description: t.colors.successDesc },
-    { name: t.colors.warning, hex: "#FFC107", description: t.colors.warningDesc },
-    { name: t.colors.danger, hex: "#D32F2F", description: t.colors.dangerDesc },
-    { name: t.colors.info, hex: "#2196F3", description: t.colors.infoDesc },
+  
+  const primaryScale = [
+    { label: "50", hex: "#FDF1EB", oklch: "0.96 0.01 42.97" },
+    { label: "100", hex: "#FBE3D7", oklch: "0.92 0.03 42.97" },
+    { label: "200", hex: "#F7C7AF", oklch: "0.85 0.07 42.97" },
+    { label: "300", hex: "#F3AB87", oklch: "0.78 0.11 42.97" },
+    { label: "400", hex: "#EF8F5F", oklch: "0.72 0.15 42.97" },
+    { label: "500", hex: "#EC6726", oklch: "0.6698 0.1803 42.9750", isPrimary: true },
+    { label: "600", hex: "#D45D22", oklch: "0.60 0.16 42.97" },
+    { label: "700", hex: "#BC521E", oklch: "0.54 0.14 42.97" },
+    { label: "800", hex: "#A4481A", oklch: "0.48 0.12 42.97" },
+    { label: "900", hex: "#8C3D16", oklch: "0.42 0.10 42.97" },
+  ];
+
+  const semanticColors = [
+    { name: t.colors.success, hex: "#4CAF50", description: t.colors.successDesc, var: "--color-success" },
+    { name: t.colors.warning, hex: "#FFC107", description: t.colors.warningDesc, var: "--color-warning" },
+    { name: t.colors.danger, hex: "#D32F2F", description: t.colors.dangerDesc, var: "--color-danger" },
+    { name: t.colors.info, hex: "#2196F3", description: t.colors.infoDesc, var: "--color-info" },
+  ];
+
+  const neutrals = [
+    { label: "Background", hex: "#FFFFFF", oklch: "1.00 0 0", var: "--color-background" },
+    { label: "Foreground", hex: "#141414", oklch: "0.14 0.004 49.25", var: "--color-foreground" },
+    { label: "Muted", hex: "#F1F5F9", oklch: "0.96 0.01 250", var: "--color-muted" },
+    { label: "Border", hex: "#E2E8F0", oklch: "0.92 0.01 250", var: "--color-border" },
   ];
 
   return (
-    <div className="space-y-8">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold">{t.colors.title}</h1>
-        <p className="text-slate-500">{t.colors.subtitle}</p>
+    <div className="space-y-12">
+      <div className="space-y-4">
+        <h1 className="text-4xl font-black tracking-tight text-slate-900">{t.colors.title}</h1>
+        <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
+          {t.colors.subtitle}
+        </p>
       </div>
 
-      <div className="space-y-6">
-        <h2 className="text-xl font-bold">{t.colors.brandStatus}</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {colors.map((color) => (
-            <Card key={color.name} className="overflow-hidden p-0">
-              <div className="h-24 w-full" style={{ backgroundColor: color.hex }} />
-              <div className="p-4">
-                <h3 className="font-bold">{color.name}</h3>
-                <p className="text-xs font-mono text-slate-500">{color.hex}</p>
-                {color.oklch && <p className="text-[10px] font-mono text-slate-400 mt-1">OKLCH: {color.oklch}</p>}
-                <p className="mt-2 text-sm text-slate-600">{color.description}</p>
+      {/* Brand Primary Section */}
+      <section className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-slate-900">{t.colors.primaryIdentity}</h2>
+        </div>
+        <div className="grid gap-8 lg:grid-cols-3">
+          <div className="lg:col-span-1">
+            <Card className="h-full overflow-hidden p-0 border-none shadow-xl">
+              <div className="h-48 w-full bg-brand-orange flex items-end p-6">
+                <span className="text-white font-black text-3xl">Clinicorp Orange</span>
+              </div>
+              <div className="p-6 space-y-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">HEX</p>
+                  <p className="font-mono text-lg font-bold text-slate-900">#EC6726</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">OKLCH</p>
+                  <p className="font-mono text-sm text-slate-600">0.6698 0.1803 42.9750</p>
+                </div>
+                <p className="text-sm text-slate-500 leading-relaxed">
+                  {t.colors.brandOrangeDesc}
+                </p>
+              </div>
+            </Card>
+          </div>
+          <div className="lg:col-span-2 space-y-4">
+            <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400">{t.colors.colorScale}</h3>
+            <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
+              {primaryScale.map((color) => (
+                <div key={color.label} className="space-y-2">
+                  <div 
+                    className={cn(
+                      "h-16 w-full rounded-md shadow-sm transition-transform hover:scale-105 cursor-pointer",
+                      color.isPrimary && "ring-2 ring-brand-orange ring-offset-2"
+                    )}
+                    style={{ backgroundColor: color.hex }}
+                  />
+                  <div className="text-center">
+                    <p className="text-[10px] font-bold text-slate-900">{color.label}</p>
+                    <p className="text-[8px] font-mono text-slate-400 uppercase">{color.hex}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Semantic Colors Section */}
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.colors.statusFeedback}</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {semanticColors.map((color) => (
+            <Card key={color.name} className="p-4 flex flex-col gap-4">
+              <div className="h-12 w-full rounded" style={{ backgroundColor: color.hex }} />
+              <div>
+                <h3 className="font-bold text-slate-900">{color.name}</h3>
+                <p className="text-[10px] font-mono text-slate-400 mb-2">{color.hex}</p>
+                <p className="text-xs text-slate-500 leading-relaxed">{color.description}</p>
               </div>
             </Card>
           ))}
         </div>
-      </div>
+      </section>
+
+      {/* Neutrals Section */}
+      <section className="space-y-6">
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold text-slate-900">{t.colors.neutrals}</h2>
+          <p className="text-sm text-slate-500">{t.colors.neutralsDesc}</p>
+        </div>
+        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr>
+                <th className="px-6 py-3 font-bold text-slate-900">Token</th>
+                <th className="px-6 py-3 font-bold text-slate-900">Preview</th>
+                <th className="px-6 py-3 font-bold text-slate-900">HEX</th>
+                <th className="px-6 py-3 font-bold text-slate-900">OKLCH</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200">
+              {neutrals.map((color) => (
+                <tr key={color.label}>
+                  <td className="px-6 py-4 font-medium text-slate-900">{color.label}</td>
+                  <td className="px-6 py-4">
+                    <div className="h-6 w-12 rounded border border-slate-200 shadow-sm" style={{ backgroundColor: color.hex }} />
+                  </td>
+                  <td className="px-6 py-4 font-mono text-xs text-slate-500">{color.hex}</td>
+                  <td className="px-6 py-4 font-mono text-xs text-slate-400">{color.oklch}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* Implementation Section */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-bold text-slate-900">{t.colors.tailwindImplementation}</h2>
+        <div className="rounded-lg bg-slate-900 p-6 font-mono text-xs text-slate-300 overflow-x-auto">
+          <pre>
+{`@theme {
+  --color-brand-orange: oklch(0.6698 0.1803 42.9750);
+  --color-success: #4CAF50;
+  --color-warning: #FFC107;
+  --color-danger: #D32F2F;
+  --color-info: #2196F3;
+}`}
+          </pre>
+        </div>
+      </section>
     </div>
   );
 }
@@ -395,6 +522,174 @@ function ButtonPage() {
           {t.button.generateReport}
         </Button>
       </div>
+    </div>
+  );
+}
+
+function ComboboxPage() {
+  const { t } = useTranslation();
+  const frameworks = [
+    { value: "next.js", label: "Next.js", icon: LayoutDashboard },
+    { value: "sveltekit", label: "SvelteKit", icon: Palette },
+    { value: "nuxt.js", label: "Nuxt.js", icon: Box },
+    { value: "remix", label: "Remix", icon: Sparkles },
+    { value: "astro", label: "Astro", icon: Type },
+  ];
+
+  return (
+    <div className="space-y-12">
+      <div className="space-y-4">
+        <h1 className="text-4xl font-black tracking-tight text-slate-900">{t.combobox.title}</h1>
+        <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
+          {t.combobox.subtitle}
+        </p>
+      </div>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.combobox.examples}</h2>
+        
+        <div className="grid gap-8 md:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.combobox.basic}</CardTitle>
+              <CardDescription>{t.combobox.basicDesc}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-center py-10">
+              <Combobox 
+                options={frameworks.map(f => ({ value: f.value, label: f.label }))}
+                placeholder={t.combobox.selectFramework}
+                searchPlaceholder={t.combobox.searchPlaceholder}
+                emptyText={t.combobox.emptyResult}
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.combobox.withIcons}</CardTitle>
+              <CardDescription>{t.combobox.withIconsDesc}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-center py-10">
+              <Combobox 
+                options={frameworks}
+                placeholder={t.combobox.selectFramework}
+                searchPlaceholder={t.combobox.searchPlaceholder}
+                emptyText={t.combobox.emptyResult}
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.combobox.variants}</h2>
+        <div className="grid gap-8 md:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.combobox.disabled}</CardTitle>
+              <CardDescription>{t.combobox.disabledDesc}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-center py-10">
+              <Combobox 
+                disabled
+                options={frameworks}
+                placeholder={t.combobox.selectFramework}
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.combobox.dosAndDonts}</h2>
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="space-y-4 rounded-xl border border-emerald-100 bg-emerald-50/50 p-6">
+            <h3 className="font-bold text-emerald-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-emerald-500" />
+              Dos
+            </h3>
+            <ul className="space-y-2 text-sm text-emerald-800/80 list-disc pl-4">
+              <li>{t.combobox.do1}</li>
+              <li>{t.combobox.do2}</li>
+            </ul>
+          </div>
+          <div className="space-y-4 rounded-xl border border-rose-100 bg-rose-50/50 p-6">
+            <h3 className="font-bold text-rose-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-rose-500" />
+              Don'ts
+            </h3>
+            <ul className="space-y-2 text-sm text-rose-800/80 list-disc pl-4">
+              <li>{t.combobox.dont1}</li>
+              <li>{t.combobox.dont2}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function AccordionPage() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="space-y-12">
+      <div className="space-y-4">
+        <h1 className="text-4xl font-black tracking-tight text-slate-900">{t.accordion.title}</h1>
+        <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
+          {t.accordion.subtitle}
+        </p>
+      </div>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.accordion.examples}</h2>
+        
+        <Card>
+          <CardHeader>
+            <CardTitle>{t.accordion.basic}</CardTitle>
+            <CardDescription>{t.accordion.basicDesc}</CardDescription>
+          </CardHeader>
+          <CardContent className="py-6">
+            <Accordion type="single" className="max-w-md mx-auto">
+              <AccordionItem value="item-1" trigger={t.accordion.item1}>
+                {t.accordion.item1Content}
+              </AccordionItem>
+              <AccordionItem value="item-2" trigger={t.accordion.item2}>
+                {t.accordion.item2Content}
+              </AccordionItem>
+              <AccordionItem value="item-3" trigger={t.accordion.item3}>
+                {t.accordion.item3Content}
+              </AccordionItem>
+            </Accordion>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.accordion.dosAndDonts}</h2>
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="space-y-4 rounded-xl border border-emerald-100 bg-emerald-50/50 p-6">
+            <h3 className="font-bold text-emerald-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-emerald-500" />
+              Dos
+            </h3>
+            <ul className="space-y-2 text-sm text-emerald-800/80 list-disc pl-4">
+              <li>{t.accordion.do1}</li>
+              <li>{t.accordion.do2}</li>
+            </ul>
+          </div>
+          <div className="space-y-4 rounded-xl border border-rose-100 bg-rose-50/50 p-6">
+            <h3 className="font-bold text-rose-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-rose-500" />
+              Don'ts
+            </h3>
+            <ul className="space-y-2 text-sm text-rose-800/80 list-disc pl-4">
+              <li>{t.accordion.dont1}</li>
+              <li>{t.accordion.dont2}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
