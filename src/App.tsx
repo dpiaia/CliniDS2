@@ -1,10 +1,23 @@
-import { LayoutDashboard, Palette, Type, Box, ChevronRight, Menu, Search, Github, ExternalLink, Sparkles, Languages } from "lucide-react";
+import { LayoutDashboard, Palette, Type, Box, ChevronRight, Menu, Search, Github, ExternalLink, Sparkles, Languages, CheckCircle2, AlertCircle, Info, AlertTriangle, Bell, User } from "lucide-react";
 import { useState, createContext, useContext } from "react";
 import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/Button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/src/components/ui/Card";
 import { Combobox } from "@/src/components/ui/Combobox";
 import { Accordion, AccordionItem } from "@/src/components/ui/Accordion";
+import { Alert, AlertTitle, AlertDescription } from "@/src/components/ui/Alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/src/components/ui/AlertDialog";
+import { Avatar, AvatarImage, AvatarFallback, AvatarGroup } from "@/src/components/ui/Avatar";
 import { motion, AnimatePresence } from "motion/react";
 import { translations, Language } from "./translations";
 
@@ -58,6 +71,9 @@ function AppContent() {
         { name: t.nav.button, icon: Box, id: "button" },
         { name: t.nav.combobox, icon: Search, id: "combobox" },
         { name: t.nav.accordion, icon: ChevronRight, id: "accordion" },
+        { name: t.nav.alert, icon: Bell, id: "alert" },
+        { name: t.nav.alertDialog, icon: AlertCircle, id: "alert-dialog" },
+        { name: t.nav.avatar, icon: User, id: "avatar" },
         { name: t.nav.card, icon: LayoutDashboard, id: "card" },
         { name: t.nav.input, icon: Type, id: "input" },
       ],
@@ -81,6 +97,12 @@ function AppContent() {
         return <ComboboxPage />;
       case "accordion":
         return <AccordionPage />;
+      case "alert":
+        return <AlertPage />;
+      case "alert-dialog":
+        return <AlertDialogPage />;
+      case "avatar":
+        return <AvatarPage />;
       default:
         return <IntroPage />;
     }
@@ -879,6 +901,362 @@ function AccordionPage() {
             <ul className="space-y-2 text-sm text-rose-800/80 list-disc pl-4">
               <li>{t.accordion.dont1}</li>
               <li>{t.accordion.dont2}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function AlertPage() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="space-y-12">
+      <PageHeader 
+        title={t.alert.title} 
+        subtitle={t.alert.subtitle} 
+        figmaLink={t.alert.figmaLink}
+        shadcnLink={t.alert.shadcnLink}
+      />
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.alert.variants}</h2>
+        
+        <div className="grid gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.alert.default}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Alert>
+                <CheckCircle2 className="h-4 w-4" />
+                <AlertTitle>Alert Title</AlertTitle>
+                <AlertDescription>
+                  This is an alert description.
+                </AlertDescription>
+              </Alert>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.alert.destructive}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Alert Title</AlertTitle>
+                <AlertDescription>
+                  This is an alert description.
+                </AlertDescription>
+              </Alert>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.alert.success}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Alert variant="success">
+                <CheckCircle2 className="h-4 w-4" />
+                <AlertTitle>Alert Title</AlertTitle>
+                <AlertDescription>
+                  This is an alert description.
+                </AlertDescription>
+              </Alert>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.alert.info}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Alert variant="info">
+                <Info className="h-4 w-4" />
+                <AlertTitle>Alert Title</AlertTitle>
+                <AlertDescription>
+                  This is an alert description.
+                </AlertDescription>
+              </Alert>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.alert.warning}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Alert variant="warning">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>Alert Title</AlertTitle>
+                <AlertDescription>
+                  This is an alert description.
+                </AlertDescription>
+              </Alert>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.alert.withAction}</h2>
+        <Card>
+          <CardContent className="py-6 space-y-4">
+            <Alert className="flex items-center justify-between">
+              <div className="flex gap-3">
+                <CheckCircle2 className="h-4 w-4 mt-0.5" />
+                <div>
+                  <AlertTitle>Alert Title</AlertTitle>
+                  <AlertDescription>This is an alert description.</AlertDescription>
+                </div>
+              </div>
+              <Button variant="secondary" size="sm" className="bg-brand-orange text-white hover:bg-brand-orange/90">Undo</Button>
+            </Alert>
+
+            <Alert variant="destructive" className="flex items-center justify-between">
+              <div className="flex gap-3">
+                <AlertCircle className="h-4 w-4 mt-0.5" />
+                <div>
+                  <AlertTitle>Alert Title</AlertTitle>
+                  <AlertDescription>This is an alert description.</AlertDescription>
+                </div>
+              </div>
+              <Button variant="destructive" size="sm" className="bg-brand-danger text-white">Undo</Button>
+            </Alert>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.alert.dosAndDonts}</h2>
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="space-y-4 rounded-xl border border-emerald-100 bg-emerald-50/50 p-6">
+            <h3 className="font-bold text-emerald-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-emerald-500" />
+              Dos
+            </h3>
+            <ul className="space-y-2 text-sm text-emerald-800/80 list-disc pl-4">
+              <li>{t.alert.do1}</li>
+              <li>{t.alert.do2}</li>
+            </ul>
+          </div>
+          <div className="space-y-4 rounded-xl border border-rose-100 bg-rose-50/50 p-6">
+            <h3 className="font-bold text-rose-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-rose-500" />
+              Don'ts
+            </h3>
+            <ul className="space-y-2 text-sm text-rose-800/80 list-disc pl-4">
+              <li>{t.alert.dont1}</li>
+              <li>{t.alert.dont2}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function AlertDialogPage() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="space-y-12">
+      <PageHeader 
+        title={t.alertDialog.title} 
+        subtitle={t.alertDialog.subtitle} 
+        figmaLink={t.alertDialog.figmaLink}
+        shadcnLink={t.alertDialog.shadcnLink}
+      />
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.alertDialog.examples}</h2>
+        
+        <div className="grid gap-8 md:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.alertDialog.basic}</CardTitle>
+              <CardDescription>Horizontal layout for actions.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-center py-10">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline">{t.alertDialog.trigger}</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>{t.alertDialog.dialogTitle}</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      {t.alertDialog.dialogDesc}
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter layout="horizontal">
+                    <AlertDialogCancel>{t.alertDialog.cancel}</AlertDialogCancel>
+                    <AlertDialogAction>{t.alertDialog.continue}</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.alertDialog.vertical}</CardTitle>
+              <CardDescription>Vertical layout for mobile or specific UI patterns.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-center py-10">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline">{t.alertDialog.trigger}</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader className="text-center sm:text-center">
+                    <AlertDialogTitle>{t.alertDialog.dialogTitle}</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      {t.alertDialog.dialogDesc}
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter layout="vertical">
+                    <AlertDialogAction className="w-full">{t.alertDialog.continue}</AlertDialogAction>
+                    <AlertDialogCancel className="w-full">{t.alertDialog.cancel}</AlertDialogCancel>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.alertDialog.dosAndDonts}</h2>
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="space-y-4 rounded-xl border border-emerald-100 bg-emerald-50/50 p-6">
+            <h3 className="font-bold text-emerald-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-emerald-500" />
+              Dos
+            </h3>
+            <ul className="space-y-2 text-sm text-emerald-800/80 list-disc pl-4">
+              <li>{t.alertDialog.do1}</li>
+              <li>{t.alertDialog.do2}</li>
+            </ul>
+          </div>
+          <div className="space-y-4 rounded-xl border border-rose-100 bg-rose-50/50 p-6">
+            <h3 className="font-bold text-rose-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-rose-500" />
+              Don'ts
+            </h3>
+            <ul className="space-y-2 text-sm text-rose-800/80 list-disc pl-4">
+              <li>{t.alertDialog.dont1}</li>
+              <li>{t.alertDialog.dont2}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function AvatarPage() {
+  const { t } = useTranslation();
+  const avatarUrl = "https://picsum.photos/seed/avatar/200/200";
+
+  return (
+    <div className="space-y-12">
+      <PageHeader 
+        title={t.avatar.title} 
+        subtitle={t.avatar.subtitle} 
+        figmaLink={t.avatar.figmaLink}
+        shadcnLink={t.avatar.shadcnLink}
+      />
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.avatar.sizes}</h2>
+        <Card>
+          <CardContent className="py-10">
+            <div className="flex flex-wrap items-end gap-6">
+              {["5", "6", "8", "10", "12", "14", "16", "20"].map((size) => (
+                <div key={size} className="flex flex-col items-center gap-2">
+                  <Avatar size={size as any}>
+                    <AvatarImage src={avatarUrl} />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <span className="text-[10px] text-slate-400 uppercase font-bold">{size}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.avatar.fallbacks}</h2>
+        <Card>
+          <CardContent className="py-10">
+            <div className="flex flex-wrap items-end gap-6">
+              {["5", "6", "8", "10", "12", "14", "16", "20"].map((size) => (
+                <Avatar key={size} size={size as any}>
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.avatar.group}</h2>
+        <Card>
+          <CardContent className="py-10">
+            <AvatarGroup limit={3}>
+              <Avatar><AvatarImage src="https://picsum.photos/seed/1/100/100" /></Avatar>
+              <Avatar><AvatarImage src="https://picsum.photos/seed/2/100/100" /></Avatar>
+              <Avatar><AvatarImage src="https://picsum.photos/seed/3/100/100" /></Avatar>
+              <Avatar><AvatarImage src="https://picsum.photos/seed/4/100/100" /></Avatar>
+              <Avatar><AvatarImage src="https://picsum.photos/seed/5/100/100" /></Avatar>
+            </AvatarGroup>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">Profile Example</h2>
+        <Card>
+          <CardContent className="py-10">
+            <div className="flex items-center gap-4">
+              <Avatar size="16">
+                <AvatarImage src={avatarUrl} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <Button variant="outline">{t.avatar.changePhoto}</Button>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-slate-900">{t.avatar.dosAndDonts}</h2>
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="space-y-4 rounded-xl border border-emerald-100 bg-emerald-50/50 p-6">
+            <h3 className="font-bold text-emerald-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-emerald-500" />
+              Dos
+            </h3>
+            <ul className="space-y-2 text-sm text-emerald-800/80 list-disc pl-4">
+              <li>{t.avatar.do1}</li>
+              <li>{t.avatar.do2}</li>
+            </ul>
+          </div>
+          <div className="space-y-4 rounded-xl border border-rose-100 bg-rose-50/50 p-6">
+            <h3 className="font-bold text-rose-900 flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-rose-500" />
+              Don'ts
+            </h3>
+            <ul className="space-y-2 text-sm text-rose-800/80 list-disc pl-4">
+              <li>{t.avatar.dont1}</li>
+              <li>{t.avatar.dont2}</li>
             </ul>
           </div>
         </div>
